@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kusuma Agamana | Kusuma & Koushik</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Noto+Serif+Kannada:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      /* Deep royal maroon backdrop for Tablet & Desktop side margins */
+      background: radial-gradient(circle at top center, #461016 0%, #1c0508 100%);
+      background-attachment: fixed;
+      color: #361f10;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Responsive Card Frame: Full width on phones, clean centered 540px card on Tablets & Laptops */
+    .app-frame {
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto;
+      background: #fdfbf4;
+      min-height: 100vh;
+      position: relative;
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.75);
+      overflow-x: hidden;
+      /* Enables container-proportional sizing (cqw) for all inner text & overlays */
+      container-type: inline-size;
+    }
+
+    /* ==========================================
+       FLOATING AUDIO BUTTON (ALIGNED TO FRAME ON TABLETS)
+       ========================================== */
+    .audio-btn {
+      position: fixed;
+      top: 14px;
+      right: max(14px, calc(50% - 256px));
+      z-index: 900;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1.5px solid #d4af37;
+      color: #4a0e17;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.3);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .audio-btn.visible {
+      display: flex;
+    }
+
+    /* ==========================================
+       1. MINIMALIST SPLASH SCREEN (DOORS)
+       Aligned to .app-frame on Phones, Tablets & Desktops
+       ========================================== */
+    .door-overlay {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 540px;
+      height: 100vh;
+      z-index: 9999;
+      display: flex;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .door-panel {
+      width: 50%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(212, 175, 55, 0.14), transparent 70%),
+        repeating-linear-gradient(90deg, #320b06 0px, #46140c 14px, #250703 28px);
+      border-top: 8px solid #8c5a14;
+      border-bottom: 8px solid #8c5a14;
+      position: relative;
+      transition: transform 1.25s cubic-bezier(0.65, 0, 0.25, 1), opacity 1.1s ease;
+      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.88);
+    }
+    .door-left {
+      border-right: 2px solid #d4af37;
+      transform-origin: left center;
+    }
+    .door-right {
+      border-left: 2px solid #d4af37;
+      transform-origin: right center;
+    }
+
+    .door-overlay.opening .door-left {
+      transform: translateX(-105%) rotateY(-65deg);
+      opacity: 0.2;
+    }
+    .door-overlay.opening .door-right {
+      transform: translateX(105%) rotateY(65deg);
+      opacity: 0.2;
+    }
+
+    .door-carving {
+      position: absolute;
+      top: 22px;
+      bottom: 22px;
+      left: 12px;
+      right: 12px;
+      border: 1.5px solid rgba(212, 175, 55, 0.5);
+      outline: 1px solid rgba(212, 175, 55, 0.25);
+      outline-offset: -7px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px;
+      text-align: center;
+      color: #d4af37;
+      font-size: 16px;
+    }
+
+    .diya-lamp {
+      position: absolute;
+      bottom: 10%;
+      width: 24px;
+      height: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .door-left .diya-lamp { right: 24px; }
+    .door-right .diya-lamp { left: 24px; }
+    .diya-flame {
+      width: 14px;
+      height: 20px;
+      border-radius: 50% 50% 35% 35%;
+      background: radial-gradient(circle, #ffffff 15%, #ffca28 55%, transparent 75%);
+      box-shadow: 0 0 18px #ffb300;
+      animation: flameFlicker 1.4s infinite alternate ease-in-out;
+    }
+    .diya-base {
+      width: 24px;
+      height: 8px;
+      border-radius: 0 0 12px 12px;
+      background: linear-gradient(90deg, #8c5a14, #f5e6b8, #8c5a14);
+      margin-top: -3px;
+    }
+    @keyframes flameFlicker {
+      0% { transform: scale(0.92); opacity: 0.85; }
+      100% { transform: scale(1.12); opacity: 1; }
+    }
+
+    .door-center {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      background: radial-gradient(circle, rgba(30, 5, 8, 0.65) 0%, rgba(15, 2, 4, 0.25) 100%);
+      transition: opacity 0.35s ease;
+    }
+    .door-overlay.opening .door-center {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .agamana-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 50px;
+      color: #f5e6b8;
+      text-shadow: 0 4px 16px rgba(0, 0, 0, 0.95), 0 0 22px rgba(212, 175, 55, 0.45);
+      line-height: 1.15;
+      margin-bottom: 4px;
+    }
+    .agamana-kn {
+      font-family: 'Noto Serif Kannada', serif;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: #d4af37;
+      margin-bottom: 34px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    }
+
+    .circle-open-btn {
+      width: 94px;
+      height: 94px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff7db 0%, #d4af37 55%, #8c5a14 100%);
+      border: 3px solid #fff3c4;
+      color: #2b060b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      cursor: pointer;
+      box-shadow: 0 0 0 7px rgba(212, 175, 55, 0.22), 0 0 32px rgba(212, 175, 55, 0.8);
+      animation: circlePulse 2s infinite ease-in-out;
+    }
+    .circle-open-btn:active {
+      transform: scale(0.92);
+    }
+    .circle-open-btn .btn-lotus {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .circle-open-btn .btn-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    @keyframes circlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    .vol-hint {
+      margin-top: 26px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10.5px;
+      letter-spacing: 0.8px;
+      color: #f5e6b8;
+      background: rgba(25, 4, 7, 0.72);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    /* ==========================================
+       2. TRUE-PROPORTION RESPONSIVE HERO SECTION
+       Locks exact image ratio + Living Diya Glows & Gold Motes
+       ========================================== */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      /* Fallback height matching 707:1000 artwork if image hasn't loaded yet */
+      min-height: 141cqw;
+      background-color: #fbf4e4;
+      overflow: hidden;
+    }
+
+    /* Image drives the exact height so NOTHING stretches or crops on Phone or Tablet */
+    .hero-bg-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+      pointer-events: none;
+      animation: subtleBreath 14s ease-in-out infinite alternate;
+    }
+    @keyframes subtleBreath {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.018); }
+    }
+
+    /* Living Flickering Halo Pinned Directly Over the Painted Brass Diyas */
+    .hero-diya-glow {
+      position: absolute;
+      bottom: 8.4%;
+      width: 12cqw;
+      height: 12cqw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 240, 170, 0.85) 0%, rgba(255, 179, 0, 0.4) 40%, transparent 72%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 2;
+      animation: diyaPulse 1.7s infinite alternate ease-in-out;
+    }
+    .hero-diya-left { left: 13.5%; }
+    .hero-diya-right { right: 13.5%; animation-delay: 0.6s; }
+
+    @keyframes diyaPulse {
+      0% { transform: scale(0.88); opacity: 0.65; }
+      100% { transform: scale(1.16); opacity: 1; }
+    }
+
+    /* Soft Floating Golden Sparkles Over Hero */
+    .sparkle-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+    .sparkle {
+      position: absolute;
+      bottom: 12%;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff8d6 0%, #d4af37 65%, transparent 100%);
+      opacity: 0;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.6); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.55; }
+      100% { transform: translateY(-95cqw) scale(1.2); opacity: 0; }
+    }
+
+    /* Safe-Zone Overlay: Always stays cleanly between Ganesha, Pillars & Mandapam */
+    .hero-body {
+      position: absolute;
+      top: 15%;
+      left: 14%;
+      right: 14%;
+      bottom: 34%;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* Smooth Staggered Entrance Once Doors Open */
+    .hero-animate {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .hero-section.revealed .hero-animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hero-section.revealed .delay-1 { transition-delay: 0.15s; }
+    .hero-section.revealed .delay-2 { transition-delay: 0.35s; }
+    .hero-section.revealed .delay-3 { transition-delay: 0.55s; }
+
+    .hero-quote {
+      font-style: italic;
+      font-size: 15px;
+      font-size: 3.5cqw;
+      line-height: 1.45;
+      color: #5c3a24;
+      max-width: 96%;
+      margin-bottom: 3cqw;
+    }
+
+    .couple-title .name-main {
+      font-size: 44px;
+      font-size: 10.8cqw;
+      font-weight: 500;
+      color: #5e141a;
+      line-height: 1.02;
+      display: block;
+      letter-spacing: 0.4px;
+      text-shadow: 0 1px 10px rgba(255, 250, 238, 0.92);
+    }
+    .couple-title .name-nick {
+      font-size: 15px;
+      font-size: 3.6cqw;
+      font-style: italic;
+      color: #7c4b27;
+      display: block;
+      margin-top: 0.5cqw;
+    }
+    .couple-title .weds-word {
+      font-family: 'Great Vibes', cursive;
+      font-size: 30px;
+      font-size: 7.4cqw;
+      color: #9b6b19;
+      display: block;
+      margin: 1cqw 0;
+    }
+
+    /* Proportional Countdown Row */
+    .countdown-row {
+      display: flex;
+      gap: 2cqw;
+      justify-content: center;
+      margin-top: 4cqw;
+      width: 100%;
+    }
+    .cd-card {
+      background: rgba(255, 252, 245, 0.88);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(212, 175, 55, 0.65);
+      border-radius: 1.8cqw;
+      min-width: 13.5cqw;
+      padding: 1.8cqw 1.2cqw;
+      box-shadow: 0 4px 12px rgba(94, 20, 26, 0.08);
+    }
+    .cd-num {
+      font-size: 20px;
+      font-size: 5cqw;
+      font-weight: 600;
+      color: #5e141a;
+      line-height: 1;
+    }
+    .cd-lbl {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 8px;
+      font-size: 1.85cqw;
+      letter-spacing: 0.2cqw;
+      text-transform: uppercase;
+      color: #7c5836;
+      margin-top: 0.9cqw;
+    }
+
+    /* ==========================================
+       3. "WITH GRATEFUL HEARTS" (COUPLE PHOTO + PERSONAL MESSAGE)
+       ========================================== */
+    .grateful-section {
+      position: relative;
+      min-height: clamp(580px, 138cqw, 760px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 46px 18px 54px;
+      background-color: #361217;
+      background-image:
+        linear-gradient(to bottom, rgba(25, 8, 10, 0.62) 0%, rgba(25, 8, 10, 0.18) 45%, rgba(25, 8, 10, 0.85) 100%),
+        url('couple.jpg');
+      background-size: cover;
+      background-position: center top;
+      overflow: hidden;
+    }
+
+    .grateful-header {
+      text-align: center;
+      color: #fff;
+      z-index: 3;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+    }
+    .grateful-kicker {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #f5e6b8;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .grateful-header h2 {
+      font-size: 36px;
+      font-weight: 400;
+    }
+
+    .petals-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      top: -24px;
+      width: 13px;
+      height: 17px;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #f6eedb 70%, #dfcda6 100%);
+      border-radius: 60% 40% 70% 30% / 60% 50% 50% 40%;
+      animation: fallPetal linear forwards;
+    }
+    @keyframes fallPetal {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.95; }
+      100% { transform: translateY(720px) rotate(320deg); opacity: 0; }
+    }
+
+    .msg-card-box {
+      width: 100%;
+      max-width: 400px;
+      z-index: 4;
+      margin-top: auto;
+      cursor: pointer;
+    }
+    .frosted-card {
+      background: rgba(255, 252, 245, 0.94);
+      border: 1.5px solid rgba(212, 175, 55, 0.7);
+      border-radius: 12px;
+      padding: 28px 22px;
+      text-align: center;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.48);
+    }
+
+    .card-closed {
+      padding: 16px 8px;
+    }
+    .open-script {
+      font-family: 'Great Vibes', cursive;
+      font-size: 46px;
+      color: #6b241d;
+      line-height: 1.05;
+    }
+    .open-caption {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #7c5836;
+      margin-top: 6px;
+    }
+
+    .card-open {
+      display: none;
+      animation: fadeMsg 0.5s ease forwards;
+    }
+    .frosted-card.is-open .card-closed { display: none; }
+    .frosted-card.is-open .card-open { display: block; }
+
+    @keyframes fadeMsg {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg-kicker {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #8c5a14;
+      margin-bottom: 12px;
+    }
+    .msg-text p {
+      font-size: 16.5px;
+      line-height: 1.58;
+      color: #361f10;
+      margin-bottom: 10px;
+    }
+    .msg-sign {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #4a0e17;
+      margin-top: 12px;
+    }
+
+    /* ==========================================
+       4. "OUR FAMILIES"
+       ========================================== */
+    .families-section {
+      padding: 50px 26px 56px;
+      background: radial-gradient(circle at 50% 90%, #efe0c5 0%, #fbf7ef 55%, #ffffff 100%);
+      text-align: center;
+      border-left: 6px dotted #e69d2c;
+      border-right: 6px dotted #e69d2c;
+      border-top: 4px solid #d4af37;
+    }
+
+    .kicker-sm {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9.5px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #8c5a14;
+      margin-bottom: 6px;
+    }
+    .sec-title {
+      font-size: 36px;
+      font-weight: 400;
+      color: #3a2214;
+      margin-bottom: 12px;
+    }
+    .sec-sub {
+      font-style: italic;
+      font-size: 16px;
+      color: #6b482f;
+      max-width: 340px;
+      margin: 0 auto 24px;
+      line-height: 1.5;
+    }
+
+    .fam-block {
+      margin: 18px 0;
+    }
+    .fam-role {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9.5px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #8c5a14;
+      margin-bottom: 4px;
+    }
+    .fam-person {
+      font-size: 29px;
+      font-weight: 500;
+      color: #3a2214;
+      margin-bottom: 6px;
+    }
+    .fam-parents {
+      font-size: 17px;
+      font-weight: 600;
+      color: #4a0e17;
+      margin-bottom: 3px;
+    }
+    .fam-place {
+      font-size: 15px;
+      color: #6e4e35;
+      line-height: 1.45;
+    }
+
+    .and-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px auto;
+      font-family: 'Great Vibes', cursive;
+      font-size: 26px;
+      color: #8c5a14;
+    }
+    .and-divider::before, .and-divider::after {
+      content: '';
+      width: 50px;
+      height: 1px;
+      background: #cbb082;
+    }
+
+    .compliments-note {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px dashed #cbb082;
+      font-size: 14.5px;
+      color: #63442d;
+      line-height: 1.55;
+    }
+
+    /* ==========================================
+       5. "THE WEDDING" (SPLIT SCHEDULE & VENUE)
+       ========================================== */
+    .wedding-section {
+      padding: 50px 20px;
+      background: #f2f1ed;
+      text-align: center;
+    }
+    .loc-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9.5px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #8c5a14;
+      margin-top: 10px;
+    }
+    .loc-city {
+      font-size: 28px;
+      font-weight: 400;
+      color: #3a2214;
+      margin-bottom: 22px;
+    }
+
+    .schedule-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 18px 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      text-align: left;
+    }
+    .day-row {
+      display: flex;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid #eeeae0;
+    }
+    .day-row:last-child { border-bottom: none; }
+
+    .date-col {
+      min-width: 70px;
+      text-align: center;
+      padding-right: 12px;
+      border-right: 1px solid #e6decb;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .date-num {
+      font-size: 30px;
+      font-weight: 500;
+      color: #3a2214;
+      line-height: 1;
+    }
+    .date-mon {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: #8c5a14;
+      margin-top: 3px;
+    }
+    .date-day {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 8.5px;
+      color: #8c7a65;
+      margin-top: 2px;
+    }
+
+    .events-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+    }
+    .ev-item h4 {
+      font-size: 18.5px;
+      font-weight: 600;
+      color: #3a2214;
+      line-height: 1.2;
+    }
+    .ev-item .kn-tag {
+      font-size: 13px;
+      color: #8c5a14;
+      display: block;
+    }
+    .ev-item .ev-time {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11.5px;
+      color: #5e4736;
+      margin-top: 3px;
+    }
+
+    .venue-white-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+    .venue-title-lg {
+      font-size: 24px;
+      font-weight: 600;
+      color: #3a2214;
+      line-height: 1.3;
+      margin: 6px 0 8px;
+    }
+    
