@@ -4,23 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kusuma Agamana | Kusuma & Koushik</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Noto+Serif+Kannada:wght@400;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&family=Noto+Serif+Kannada:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
+    :root { --w: min(100vw, 520px); }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
     html, body {
       width: 100%;
       min-height: 100%;
-      /* Deep royal maroon backdrop for Tablet & Desktop side margins */
       background: radial-gradient(circle at top center, #461016 0%, #1c0508 100%);
       background-attachment: fixed;
       color: #361f10;
@@ -29,102 +22,70 @@
       scroll-behavior: smooth;
     }
 
-    /* Responsive Card Frame: Full width on phones, clean centered 540px card on Tablets & Laptops */
     .app-frame {
       width: 100%;
-      max-width: 540px;
+      max-width: 520px;
       margin: 0 auto;
       background: #fdfbf4;
       min-height: 100vh;
       position: relative;
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.75);
+      box-shadow: 0 0 60px rgba(0,0,0,0.75);
       overflow-x: hidden;
-      /* Enables container-proportional sizing (cqw) for all inner text & overlays */
-      container-type: inline-size;
     }
 
-    /* ==========================================
-       FLOATING AUDIO BUTTON (ALIGNED TO FRAME ON TABLETS)
-       ========================================== */
+    /* Floating Audio Toggle */
     .audio-btn {
       position: fixed;
       top: 14px;
-      right: max(14px, calc(50% - 256px));
+      right: max(14px, calc(50% - 246px));
       z-index: 900;
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255,255,255,0.94);
       border: 1.5px solid #d4af37;
       color: #4a0e17;
       display: none;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 3px 14px rgba(0,0,0,0.3);
       font-size: 13px;
       font-weight: 700;
     }
-    .audio-btn.visible {
-      display: flex;
-    }
+    .audio-btn.visible { display: flex; }
 
-    /* ==========================================
-       1. MINIMALIST SPLASH SCREEN (DOORS)
-       Aligned to .app-frame on Phones, Tablets & Desktops
-       ========================================== */
+    /* 1. MINIMALIST TEMPLE DOOR SPLASH SCREEN */
     .door-overlay {
       position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 540px;
-      height: 100vh;
+      top: 0; left: 0; right: 0; bottom: 0;
+      max-width: 520px;
+      margin: 0 auto;
       z-index: 9999;
       display: flex;
       overflow: hidden;
-      background: transparent;
     }
-
     .door-panel {
       width: 50%;
       height: 100%;
-      background:
-        radial-gradient(circle at 50% 45%, rgba(212, 175, 55, 0.14), transparent 70%),
-        repeating-linear-gradient(90deg, #320b06 0px, #46140c 14px, #250703 28px);
+      background: radial-gradient(circle at 50% 45%, rgba(212,175,55,0.14), transparent 70%),
+                  repeating-linear-gradient(90deg, #320b06 0px, #46140c 14px, #250703 28px);
       border-top: 8px solid #8c5a14;
       border-bottom: 8px solid #8c5a14;
       position: relative;
-      transition: transform 1.25s cubic-bezier(0.65, 0, 0.25, 1), opacity 1.1s ease;
-      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.88);
+      transition: transform 1.2s cubic-bezier(0.65, 0, 0.25, 1), opacity 1.1s ease;
+      box-shadow: inset 0 0 50px rgba(0,0,0,0.88);
     }
-    .door-left {
-      border-right: 2px solid #d4af37;
-      transform-origin: left center;
-    }
-    .door-right {
-      border-left: 2px solid #d4af37;
-      transform-origin: right center;
-    }
-
-    .door-overlay.opening .door-left {
-      transform: translateX(-105%) rotateY(-65deg);
-      opacity: 0.2;
-    }
-    .door-overlay.opening .door-right {
-      transform: translateX(105%) rotateY(65deg);
-      opacity: 0.2;
-    }
+    .door-left { border-right: 2px solid #d4af37; transform-origin: left center; }
+    .door-right { border-left: 2px solid #d4af37; transform-origin: right center; }
+    .door-overlay.opening .door-left { transform: translateX(-105%) rotateY(-65deg); opacity: 0.2; }
+    .door-overlay.opening .door-right { transform: translateX(105%) rotateY(65deg); opacity: 0.2; }
 
     .door-carving {
       position: absolute;
-      top: 22px;
-      bottom: 22px;
-      left: 12px;
-      right: 12px;
-      border: 1.5px solid rgba(212, 175, 55, 0.5);
-      outline: 1px solid rgba(212, 175, 55, 0.25);
+      top: 22px; bottom: 22px; left: 12px; right: 12px;
+      border: 1.5px solid rgba(212,175,55,0.5);
+      outline: 1px solid rgba(212,175,55,0.25);
       outline-offset: -7px;
       display: flex;
       flex-direction: column;
@@ -134,622 +95,574 @@
       color: #d4af37;
       font-size: 16px;
     }
-
-    .diya-lamp {
-      position: absolute;
-      bottom: 10%;
-      width: 24px;
-      height: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+    .diya-lamp { position: absolute; bottom: 10%; width: 24px; height: 30px; display: flex; flex-direction: column; align-items: center; }
     .door-left .diya-lamp { right: 24px; }
     .door-right .diya-lamp { left: 24px; }
     .diya-flame {
-      width: 14px;
-      height: 20px;
-      border-radius: 50% 50% 35% 35%;
-      background: radial-gradient(circle, #ffffff 15%, #ffca28 55%, transparent 75%);
+      width: 14px; height: 20px; border-radius: 50% 50% 35% 35%;
+      background: radial-gradient(circle, #fff 15%, #ffca28 55%, transparent 75%);
       box-shadow: 0 0 18px #ffb300;
-      animation: flameFlicker 1.4s infinite alternate ease-in-out;
+      animation: flame 1.4s infinite alternate ease-in-out;
     }
-    .diya-base {
-      width: 24px;
-      height: 8px;
-      border-radius: 0 0 12px 12px;
-      background: linear-gradient(90deg, #8c5a14, #f5e6b8, #8c5a14);
-      margin-top: -3px;
-    }
-    @keyframes flameFlicker {
-      0% { transform: scale(0.92); opacity: 0.85; }
-      100% { transform: scale(1.12); opacity: 1; }
-    }
+    .diya-base { width: 24px; height: 8px; border-radius: 0 0 12px 12px; background: linear-gradient(90deg, #8c5a14, #f5e6b8, #8c5a14); margin-top: -3px; }
+    @keyframes flame { 0% { transform: scale(0.92); opacity: 0.85; } 100% { transform: scale(1.12); opacity: 1; } }
 
     .door-center {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 24px;
-      background: radial-gradient(circle, rgba(30, 5, 8, 0.65) 0%, rgba(15, 2, 4, 0.25) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 24px;
+      background: radial-gradient(circle, rgba(30,5,8,0.65) 0%, rgba(15,2,4,0.25) 100%);
       transition: opacity 0.35s ease;
     }
-    .door-overlay.opening .door-center {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .agamana-title {
-      font-family: 'Great Vibes', cursive;
-      font-size: 50px;
-      color: #f5e6b8;
-      text-shadow: 0 4px 16px rgba(0, 0, 0, 0.95), 0 0 22px rgba(212, 175, 55, 0.45);
-      line-height: 1.15;
-      margin-bottom: 4px;
-    }
-    .agamana-kn {
-      font-family: 'Noto Serif Kannada', serif;
-      font-size: 14px;
-      letter-spacing: 2px;
-      color: #d4af37;
-      margin-bottom: 34px;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-    }
+    .door-overlay.opening .door-center { opacity: 0; pointer-events: none; }
+    .agamana-title { font-family: 'Great Vibes', cursive; font-size: 50px; color: #f5e6b8; text-shadow: 0 4px 16px #000, 0 0 22px rgba(212,175,55,0.45); line-height: 1.15; margin-bottom: 4px; }
+    .agamana-kn { font-family: 'Noto Serif Kannada', serif; font-size: 14px; letter-spacing: 2px; color: #d4af37; margin-bottom: 34px; text-shadow: 0 2px 8px #000; }
 
     .circle-open-btn {
-      width: 94px;
-      height: 94px;
-      border-radius: 50%;
+      width: 94px; height: 94px; border-radius: 50%;
       background: radial-gradient(circle at 35% 30%, #fff7db 0%, #d4af37 55%, #8c5a14 100%);
-      border: 3px solid #fff3c4;
-      color: #2b060b;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
+      border: 3px solid #fff3c4; color: #2b060b;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
       cursor: pointer;
-      box-shadow: 0 0 0 7px rgba(212, 175, 55, 0.22), 0 0 32px rgba(212, 175, 55, 0.8);
-      animation: circlePulse 2s infinite ease-in-out;
+      box-shadow: 0 0 0 7px rgba(212,175,55,0.22), 0 0 32px rgba(212,175,55,0.8);
+      animation: pulse 2s infinite ease-in-out;
     }
-    .circle-open-btn:active {
-      transform: scale(0.92);
-    }
-    .circle-open-btn .btn-lotus {
-      font-size: 22px;
-      line-height: 1;
-    }
-    .circle-open-btn .btn-label {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    @keyframes circlePulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.06); }
-    }
+    .circle-open-btn:active { transform: scale(0.92); }
+    .btn-lotus { font-size: 22px; line-height: 1; }
+    .btn-label { font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+    .vol-hint { margin-top: 26px; font-family: 'Montserrat', sans-serif; font-size: 10.5px; color: #f5e6b8; background: rgba(25,4,7,0.75); border: 1px solid rgba(212,175,55,0.4); padding: 6px 14px; border-radius: 20px; }
 
-    .vol-hint {
-      margin-top: 26px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10.5px;
-      letter-spacing: 0.8px;
-      color: #f5e6b8;
-      background: rgba(25, 4, 7, 0.72);
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      padding: 6px 14px;
-      border-radius: 20px;
-    }
-
-    /* ==========================================
-       2. TRUE-PROPORTION RESPONSIVE HERO SECTION
-       Locks exact image ratio + Living Diya Glows & Gold Motes
-       ========================================== */
+    /* 2. RESPONSIVE HERO SECTION (USES hero-bg.jpeg) */
     .hero-section {
       position: relative;
       width: 100%;
-      /* Fallback height matching 707:1000 artwork if image hasn't loaded yet */
-      min-height: 141cqw;
+      min-height: calc(var(--w) * 1.41);
       background-color: #fbf4e4;
       overflow: hidden;
     }
-
-    /* Image drives the exact height so NOTHING stretches or crops on Phone or Tablet */
     .hero-bg-img {
       width: 100%;
       height: auto;
       display: block;
       user-select: none;
       pointer-events: none;
-      animation: subtleBreath 14s ease-in-out infinite alternate;
+      animation: breath 14s ease-in-out infinite alternate;
     }
-    @keyframes subtleBreath {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.018); }
-    }
+    @keyframes breath { 0% { transform: scale(1); } 100% { transform: scale(1.016); } }
 
-    /* Living Flickering Halo Pinned Directly Over the Painted Brass Diyas */
     .hero-diya-glow {
-      position: absolute;
-      bottom: 8.4%;
-      width: 12cqw;
-      height: 12cqw;
+      position: absolute; bottom: 8.4%;
+      width: calc(var(--w) * 0.12); height: calc(var(--w) * 0.12);
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 240, 170, 0.85) 0%, rgba(255, 179, 0, 0.4) 40%, transparent 72%);
-      mix-blend-mode: screen;
-      pointer-events: none;
-      z-index: 2;
+      background: radial-gradient(circle, rgba(255,240,170,0.85) 0%, rgba(255,179,0,0.4) 40%, transparent 72%);
+      mix-blend-mode: screen; pointer-events: none; z-index: 2;
       animation: diyaPulse 1.7s infinite alternate ease-in-out;
     }
     .hero-diya-left { left: 13.5%; }
     .hero-diya-right { right: 13.5%; animation-delay: 0.6s; }
+    @keyframes diyaPulse { 0% { transform: scale(0.88); opacity: 0.65; } 100% { transform: scale(1.16); opacity: 1; } }
 
-    @keyframes diyaPulse {
-      0% { transform: scale(0.88); opacity: 0.65; }
-      100% { transform: scale(1.16); opacity: 1; }
-    }
+    .sparkle-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; }
+    .sparkle { position: absolute; bottom: 12%; border-radius: 50%; background: radial-gradient(circle, #fff8d6 0%, #d4af37 65%, transparent 100%); opacity: 0; animation: floatUp linear infinite; }
+    @keyframes floatUp { 0% { transform: translateY(0) scale(0.6); opacity: 0; } 20% { opacity: 0.85; } 80% { opacity: 0.5; } 100% { transform: translateY(calc(var(--w) * -0.95)) scale(1.2); opacity: 0; } }
 
-    /* Soft Floating Golden Sparkles Over Hero */
-    .sparkle-layer {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 2;
-      overflow: hidden;
-    }
-    .sparkle {
-      position: absolute;
-      bottom: 12%;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #fff8d6 0%, #d4af37 65%, transparent 100%);
-      opacity: 0;
-      animation: floatUp linear infinite;
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(0) scale(0.6); opacity: 0; }
-      20% { opacity: 0.8; }
-      80% { opacity: 0.55; }
-      100% { transform: translateY(-95cqw) scale(1.2); opacity: 0; }
-    }
-
-    /* Safe-Zone Overlay: Always stays cleanly between Ganesha, Pillars & Mandapam */
     .hero-body {
       position: absolute;
-      top: 15%;
-      left: 14%;
-      right: 14%;
-      bottom: 34%;
+      top: 15%; left: 14%; right: 14%; bottom: 34%;
       z-index: 3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
     }
+    .hero-animate { opacity: 0; transform: translateY(14px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .hero-section.revealed .hero-animate { opacity: 1; transform: translateY(0); }
+    .hero-section.revealed .d1 { transition-delay: 0.15s; }
+    .hero-section.revealed .d2 { transition-delay: 0.35s; }
+    .hero-section.revealed .d3 { transition-delay: 0.55s; }
 
-    /* Smooth Staggered Entrance Once Doors Open */
-    .hero-animate {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.9s ease, transform 0.9s ease;
-    }
-    .hero-section.revealed .hero-animate {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .hero-section.revealed .delay-1 { transition-delay: 0.15s; }
-    .hero-section.revealed .delay-2 { transition-delay: 0.35s; }
-    .hero-section.revealed .delay-3 { transition-delay: 0.55s; }
+    .hero-quote { font-style: italic; font-size: 14px; font-size: calc(var(--w) * 0.036); line-height: 1.45; color: #5c3a24; margin-bottom: calc(var(--w) * 0.028); }
+    .name-main { font-size: 42px; font-size: calc(var(--w) * 0.108); font-weight: 500; color: #5e141a; line-height: 1.02; display: block; text-shadow: 0 1px 10px rgba(255,250,238,0.92); }
+    .name-nick { font-size: 15px; font-size: calc(var(--w) * 0.037); font-style: italic; color: #7c4b27; display: block; margin-top: 2px; }
+    .weds-word { font-family: 'Great Vibes', cursive; font-size: 28px; font-size: calc(var(--w) * 0.075); color: #9b6b19; display: block; margin: calc(var(--w) * 0.01) 0; }
 
-    .hero-quote {
-      font-style: italic;
-      font-size: 15px;
-      font-size: 3.5cqw;
-      line-height: 1.45;
-      color: #5c3a24;
-      max-width: 96%;
-      margin-bottom: 3cqw;
-    }
+    .countdown-row { display: flex; gap: calc(var(--w) * 0.02); justify-content: center; margin-top: calc(var(--w) * 0.038); width: 100%; }
+    .cd-card { background: rgba(255,252,245,0.88); border: 1px solid rgba(212,175,55,0.65); border-radius: 7px; min-width: calc(var(--w) * 0.132); padding: calc(var(--w) * 0.018) calc(var(--w) * 0.012); box-shadow: 0 4px 12px rgba(94,20,26,0.08); }
+    .cd-num { font-size: 20px; font-size: calc(var(--w) * 0.05); font-weight: 600; color: #5e141a; line-height: 1; }
+    .cd-lbl { font-family: 'Montserrat', sans-serif; font-size: 8px; font-size: calc(var(--w) * 0.0185); letter-spacing: 0.8px; text-transform: uppercase; color: #7c5836; margin-top: 3px; }
 
-    .couple-title .name-main {
-      font-size: 44px;
-      font-size: 10.8cqw;
-      font-weight: 500;
-      color: #5e141a;
-      line-height: 1.02;
-      display: block;
-      letter-spacing: 0.4px;
-      text-shadow: 0 1px 10px rgba(255, 250, 238, 0.92);
-    }
-    .couple-title .name-nick {
-      font-size: 15px;
-      font-size: 3.6cqw;
-      font-style: italic;
-      color: #7c4b27;
-      display: block;
-      margin-top: 0.5cqw;
-    }
-    .couple-title .weds-word {
-      font-family: 'Great Vibes', cursive;
-      font-size: 30px;
-      font-size: 7.4cqw;
-      color: #9b6b19;
-      display: block;
-      margin: 1cqw 0;
-    }
-
-    /* Proportional Countdown Row */
-    .countdown-row {
-      display: flex;
-      gap: 2cqw;
-      justify-content: center;
-      margin-top: 4cqw;
-      width: 100%;
-    }
-    .cd-card {
-      background: rgba(255, 252, 245, 0.88);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: 1px solid rgba(212, 175, 55, 0.65);
-      border-radius: 1.8cqw;
-      min-width: 13.5cqw;
-      padding: 1.8cqw 1.2cqw;
-      box-shadow: 0 4px 12px rgba(94, 20, 26, 0.08);
-    }
-    .cd-num {
-      font-size: 20px;
-      font-size: 5cqw;
-      font-weight: 600;
-      color: #5e141a;
-      line-height: 1;
-    }
-    .cd-lbl {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 8px;
-      font-size: 1.85cqw;
-      letter-spacing: 0.2cqw;
-      text-transform: uppercase;
-      color: #7c5836;
-      margin-top: 0.9cqw;
-    }
-
-    /* ==========================================
-       3. "WITH GRATEFUL HEARTS" (COUPLE PHOTO + PERSONAL MESSAGE)
-       ========================================== */
+    /* 3. WITH GRATEFUL HEARTS (COUPLE PHOTO + MESSAGE CARD) */
     .grateful-section {
       position: relative;
-      min-height: clamp(580px, 138cqw, 760px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
+      min-height: clamp(580px, calc(var(--w) * 1.38), 740px);
+      display: flex; flex-direction: column; align-items: center; justify-content: space-between;
       padding: 46px 18px 54px;
       background-color: #361217;
-      background-image:
-        linear-gradient(to bottom, rgba(25, 8, 10, 0.62) 0%, rgba(25, 8, 10, 0.18) 45%, rgba(25, 8, 10, 0.85) 100%),
-        url('couple.jpg');
-      background-size: cover;
-      background-position: center top;
+      background-image: linear-gradient(to bottom, rgba(25,8,10,0.62) 0%, rgba(25,8,10,0.18) 45%, rgba(25,8,10,0.85) 100%), url('couple.jpg');
+      background-size: cover; background-position: center top;
       overflow: hidden;
     }
+    .grateful-header { text-align: center; color: #fff; z-index: 3; text-shadow: 0 2px 10px rgba(0,0,0,0.85); }
+    .grateful-kicker { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #f5e6b8; display: block; margin-bottom: 6px; }
+    .grateful-header h2 { font-size: 36px; font-weight: 400; }
 
-    .grateful-header {
-      text-align: center;
-      color: #fff;
-      z-index: 3;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
-    }
-    .grateful-kicker {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #f5e6b8;
-      display: block;
-      margin-bottom: 6px;
-    }
-    .grateful-header h2 {
-      font-size: 36px;
-      font-weight: 400;
-    }
+    .petals-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; }
+    .petal { position: absolute; top: -24px; width: 13px; height: 17px; background: radial-gradient(circle at 30% 30%, #fff, #f6eedb 70%, #dfcda6 100%); border-radius: 60% 40% 70% 30% / 60% 50% 50% 40%; animation: fallPetal linear forwards; }
+    @keyframes fallPetal { 0% { transform: translateY(0) rotate(0deg); opacity: 0.95; } 100% { transform: translateY(720px) rotate(320deg); opacity: 0; } }
 
-    .petals-layer {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 2;
-      overflow: hidden;
-    }
-    .petal {
-      position: absolute;
-      top: -24px;
-      width: 13px;
-      height: 17px;
-      background: radial-gradient(circle at 30% 30%, #ffffff, #f6eedb 70%, #dfcda6 100%);
-      border-radius: 60% 40% 70% 30% / 60% 50% 50% 40%;
-      animation: fallPetal linear forwards;
-    }
-    @keyframes fallPetal {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0.95; }
-      100% { transform: translateY(720px) rotate(320deg); opacity: 0; }
-    }
-
-    .msg-card-box {
-      width: 100%;
-      max-width: 400px;
-      z-index: 4;
-      margin-top: auto;
-      cursor: pointer;
-    }
-    .frosted-card {
-      background: rgba(255, 252, 245, 0.94);
-      border: 1.5px solid rgba(212, 175, 55, 0.7);
-      border-radius: 12px;
-      padding: 28px 22px;
-      text-align: center;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.48);
-    }
-
-    .card-closed {
-      padding: 16px 8px;
-    }
-    .open-script {
-      font-family: 'Great Vibes', cursive;
-      font-size: 46px;
-      color: #6b241d;
-      line-height: 1.05;
-    }
-    .open-caption {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #7c5836;
-      margin-top: 6px;
-    }
-
-    .card-open {
-      display: none;
-      animation: fadeMsg 0.5s ease forwards;
-    }
+    .msg-card-box { width: 100%; max-width: 390px; z-index: 4; margin-top: auto; cursor: pointer; }
+    .frosted-card { background: rgba(255,252,245,0.94); border: 1.5px solid rgba(212,175,55,0.7); border-radius: 12px; padding: 26px 20px; text-align: center; box-shadow: 0 12px 32px rgba(0,0,0,0.48); }
+    .card-closed { padding: 14px 8px; }
+    .open-script { font-family: 'Great Vibes', cursive; font-size: 46px; color: #6b241d; line-height: 1.05; }
+    .open-caption { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #7c5836; margin-top: 6px; }
+    .card-open { display: none; animation: fadeMsg 0.5s ease forwards; }
     .frosted-card.is-open .card-closed { display: none; }
     .frosted-card.is-open .card-open { display: block; }
+    @keyframes fadeMsg { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .msg-kicker { font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #8c5a14; margin-bottom: 12px; }
+    .msg-text p { font-size: 16.5px; line-height: 1.58; color: #361f10; margin-bottom: 10px; }
+    .msg-sign { font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #4a0e17; margin-top: 12px; }
 
-    @keyframes fadeMsg {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* 4. OUR FAMILIES */
+    .families-section { padding: 50px 26px 56px; background: radial-gradient(circle at 50% 90%, #efe0c5 0%, #fbf7ef 55%, #fff 100%); text-align: center; border-left: 6px dotted #e69d2c; border-right: 6px dotted #e69d2c; border-top: 4px solid #d4af37; }
+    .kicker-sm { font-family: 'Montserrat', sans-serif; font-size: 9.5px; letter-spacing: 2.5px; text-transform: uppercase; color: #8c5a14; margin-bottom: 6px; }
+    .sec-title { font-size: 36px; font-weight: 400; color: #3a2214; margin-bottom: 12px; }
+    .sec-sub { font-style: italic; font-size: 16px; color: #6b482f; max-width: 340px; margin: 0 auto 24px; line-height: 1.5; }
+    .fam-block { margin: 18px 0; }
+    .fam-role { font-family: 'Montserrat', sans-serif; font-size: 9.5px; letter-spacing: 2.5px; text-transform: uppercase; color: #8c5a14; margin-bottom: 4px; }
+    .fam-person { font-size: 29px; font-weight: 500; color: #3a2214; margin-bottom: 6px; }
+    .fam-parents { font-size: 17px; font-weight: 600; color: #4a0e17; margin-bottom: 3px; }
+    .fam-place { font-size: 15px; color: #6e4e35; line-height: 1.45; }
+    .and-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 20px auto; font-family: 'Great Vibes', cursive; font-size: 26px; color: #8c5a14; }
+    .and-divider::before, .and-divider::after { content: ''; width: 50px; height: 1px; background: #cbb082; }
+    .compliments-note { margin-top: 24px; padding-top: 16px; border-top: 1px dashed #cbb082; font-size: 14.5px; color: #63442d; line-height: 1.55; }
 
-    .msg-kicker {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #8c5a14;
-      margin-bottom: 12px;
-    }
-    .msg-text p {
-      font-size: 16.5px;
-      line-height: 1.58;
-      color: #361f10;
-      margin-bottom: 10px;
-    }
-    .msg-sign {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10.5px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #4a0e17;
-      margin-top: 12px;
-    }
-
-    /* ==========================================
-       4. "OUR FAMILIES"
-       ========================================== */
-    .families-section {
-      padding: 50px 26px 56px;
-      background: radial-gradient(circle at 50% 90%, #efe0c5 0%, #fbf7ef 55%, #ffffff 100%);
-      text-align: center;
-      border-left: 6px dotted #e69d2c;
-      border-right: 6px dotted #e69d2c;
-      border-top: 4px solid #d4af37;
-    }
-
-    .kicker-sm {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 9.5px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #8c5a14;
-      margin-bottom: 6px;
-    }
-    .sec-title {
-      font-size: 36px;
-      font-weight: 400;
-      color: #3a2214;
-      margin-bottom: 12px;
-    }
-    .sec-sub {
-      font-style: italic;
-      font-size: 16px;
-      color: #6b482f;
-      max-width: 340px;
-      margin: 0 auto 24px;
-      line-height: 1.5;
-    }
-
-    .fam-block {
-      margin: 18px 0;
-    }
-    .fam-role {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 9.5px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #8c5a14;
-      margin-bottom: 4px;
-    }
-    .fam-person {
-      font-size: 29px;
-      font-weight: 500;
-      color: #3a2214;
-      margin-bottom: 6px;
-    }
-    .fam-parents {
-      font-size: 17px;
-      font-weight: 600;
-      color: #4a0e17;
-      margin-bottom: 3px;
-    }
-    .fam-place {
-      font-size: 15px;
-      color: #6e4e35;
-      line-height: 1.45;
-    }
-
-    .and-divider {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin: 20px auto;
-      font-family: 'Great Vibes', cursive;
-      font-size: 26px;
-      color: #8c5a14;
-    }
-    .and-divider::before, .and-divider::after {
-      content: '';
-      width: 50px;
-      height: 1px;
-      background: #cbb082;
-    }
-
-    .compliments-note {
-      margin-top: 24px;
-      padding-top: 16px;
-      border-top: 1px dashed #cbb082;
-      font-size: 14.5px;
-      color: #63442d;
-      line-height: 1.55;
-    }
-
-    /* ==========================================
-       5. "THE WEDDING" (SPLIT SCHEDULE & VENUE)
-       ========================================== */
-    .wedding-section {
-      padding: 50px 20px;
-      background: #f2f1ed;
-      text-align: center;
-    }
-    .loc-label {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 9.5px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #8c5a14;
-      margin-top: 10px;
-    }
-    .loc-city {
-      font-size: 28px;
-      font-weight: 400;
-      color: #3a2214;
-      margin-bottom: 22px;
-    }
-
-    .schedule-card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 18px 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-      text-align: left;
-    }
-    .day-row {
-      display: flex;
-      gap: 14px;
-      padding: 12px 0;
-      border-bottom: 1px solid #eeeae0;
-    }
+    /* 5. THE WEDDING */
+    .wedding-section { padding: 50px 20px; background: #f2f1ed; text-align: center; }
+    .loc-city { font-size: 28px; font-weight: 400; color: #3a2214; margin-bottom: 22px; }
+    .schedule-card, .venue-white-card { background: #fff; border-radius: 16px; padding: 18px 16px; margin-bottom: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); }
+    .schedule-card { text-align: left; }
+    .day-row { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #eeeae0; }
     .day-row:last-child { border-bottom: none; }
+    .date-col { min-width: 70px; text-align: center; padding-right: 12px; border-right: 1px solid #e6decb; display: flex; flex-direction: column; justify-content: center; }
+    .date-num { font-size: 30px; font-weight: 500; color: #3a2214; line-height: 1; }
+    .date-mon { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 1.5px; color: #8c5a14; margin-top: 3px; }
+    .date-day { font-family: 'Montserrat', sans-serif; font-size: 8.5px; color: #8c7a65; margin-top: 2px; }
+    .events-col { flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: center; }
+    .ev-item h4 { font-size: 18.5px; font-weight: 600; color: #3a2214; }
+    .kn-tag { font-size: 13px; color: #8c5a14; display: block; }
+    .ev-time { font-family: 'Montserrat', sans-serif; font-size: 11.5px; color: #5e4736; margin-top: 3px; }
+    .venue-white-card { padding: 24px 18px; }
+    .venue-title-lg { font-size: 24px; font-weight: 600; color: #3a2214; line-height: 1.3; margin: 6px 0 8px; }
+    .venue-sub-loc { font-family: 'Montserrat', sans-serif; font-size: 12px; color: #6b5340; margin-bottom: 18px; }
+    .dir-btn-maroon { display: inline-block; background: #6b241d; color: #fff; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; padding: 13px 28px; border-radius: 30px; box-shadow: 0 5px 14px rgba(107,36,29,0.35); }
 
-    .date-col {
-      min-width: 70px;
-      text-align: center;
-      padding-right: 12px;
-      border-right: 1px solid #e6decb;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .date-num {
-      font-size: 30px;
-      font-weight: 500;
-      color: #3a2214;
-      line-height: 1;
-    }
-    .date-mon {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      color: #8c5a14;
-      margin-top: 3px;
-    }
-    .date-day {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 8.5px;
-      color: #8c7a65;
-      margin-top: 2px;
+    /* 6. THE RECEPTION (ATITHI SATKARA) */
+    .reception-section { padding: 54px 20px; background: radial-gradient(circle at 50% 18%, rgba(255,193,7,0.22) 0%, transparent 55%), linear-gradient(180deg, #3c070c 0%, #590c14 55%, #2a0408 100%); color: #fff6e0; text-align: center; border-top: 3px solid #d4af37; border-bottom: 3px solid #d4af37; }
+    .reception-section .sec-title { color: #fff8e7; }
+    .reception-section .sec-sub { color: #e8cfa4; }
+    .rec-row { display: flex; gap: 12px; margin: 22px 0; }
+    .rec-date-box { background: rgba(255,255,255,0.94); color: #3a1216; border-radius: 14px; min-width: 80px; padding: 14px 10px; display: flex; flex-direction: column; justify-content: center; }
+    .rec-info-box { flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(212,175,55,0.45); border-radius: 14px; padding: 14px 16px; text-align: left; }
+    .rec-info-box h4 { font-size: 21px; color: #fff8e7; }
+    .rec-info-box p { font-family: 'Montserrat', sans-serif; font-size: 11.5px; color: #f3d9a4; margin-top: 4px; }
+    .dir-btn-gold { display: inline-block; margin-top: 16px; background: linear-gradient(135deg, #f8e59d 0%, #d4af37 100%); color: #2b060b; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; padding: 13px 28px; border-radius: 30px; box-shadow: 0 5px 16px rgba(212,175,55,0.4); }
+
+    /* 7. PLACES TO EXPLORE */
+    .explore-section { padding: 50px 20px; background: #f5f4f0; text-align: left; }
+    .explore-sub { font-size: 16px; color: #6b5848; margin-bottom: 22px; line-height: 1.5; }
+    .place-slider-card { background: #fff; border-radius: 18px; padding: 24px 20px; box-shadow: 0 6px 22px rgba(0,0,0,0.06); position: relative; min-height: 220px; }
+    .slide-badge { position: absolute; top: 18px; right: 18px; background: #f6efe0; color: #6b442a; font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 600; padding: 5px 10px; border-radius: 8px; }
+    .slide-name { font-size: 27px; font-weight: 500; color: #3a2214; margin: 6px 0 8px; }
+    .slide-dist { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 10.5px; background: #f6efe0; color: #6b442a; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
+    .slide-desc { font-size: 15.5px; color: #5a4435; line-height: 1.55; }
+    .slider-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; padding: 0 8px; }
+    .arrow-btn { width: 42px; height: 42px; border-radius: 50%; background: #fff; border: 1px solid #d9d2c5; color: #4a0e17; font-size: 16px; cursor: pointer; }
+    .swipe-hint { font-family: 'Montserrat', sans-serif; font-size: 9.5px; letter-spacing: 2px; color: #8c7a65; }
+
+    /* 8. FOOTER */
+    .footer-section { padding: 54px 24px 64px; background: #f9f8f4; text-align: center; border-top: 1px solid #e6e0d4; }
+    .footer-thanks { font-size: 40px; font-weight: 400; color: #3a2214; margin: 4px 0 14px; }
+    .footer-note { font-size: 16px; color: #5e4736; max-width: 320px; margin: 0 auto 18px; line-height: 1.55; }
+    .footer-names { font-style: italic; font-size: 18.5px; color: #3a2214; margin-bottom: 18px; }
+    .welcome-pill { display: inline-block; border: 1px solid #d4af37; border-radius: 30px; padding: 8px 20px; font-style: italic; font-size: 14px; color: #7c5836; margin-bottom: 20px; }
+    .rsvp-line { font-family: 'Montserrat', sans-serif; font-size: 11px; color: #6b5340; }
+    .rsvp-line a { color: #4a0e17; font-weight: 600; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <audio id="customMp3" src="music.mp3" loop preload="none"></audio>
+  <button class="audio-btn" id="audioBtn" onclick="toggleAudio()" aria-label="Toggle Music">❚❚</button>
+
+   <!-- 1. SPLASH DOORS -->
+  <div class="door-overlay" id="doorOverlay">
+    <div class="door-panel door-left">
+      <div class="door-carving"><span>❖</span><span>❖</span></div>
+      <div class="diya-lamp"><div class="diya-flame"></div><div class="diya-base"></div></div>
+    </div>
+    <div class="door-panel door-right">
+      <div class="door-carving"><span>❖</span><span>❖</span></div>
+      <div class="diya-lamp"><div class="diya-flame"></div><div class="diya-base"></div></div>
+    </div>
+    <div class="door-center">
+      <h1 class="agamana-title">Kusuma Agamana</h1>
+      <div class="agamana-kn">ಕುಸುಮ ಆಗಮನ</div>
+      <button class="circle-open-btn" id="openBtn" onclick="openInvitation()">
+        <span class="btn-lotus">🪷</span>
+        <span class="btn-label">Open</span>
+      </button>
+      <div class="vol-hint">🔊 Turn on volume for divine flute music</div>
+    </div>
+  </div>
+
+  <!-- MAIN INVITATION -->
+  <div class="app-frame">
+
+    <!-- 2. HERO SECTION (hero-bg.jpeg) -->
+    <section class="hero-section" id="heroSection">
+      <img
+        src="hero-bg.jpeg"
+        alt="Wedding Temple Background"
+        class="hero-bg-img"
+        onload="this.parentElement.style.minHeight='0';"
+        onerror="if(!this.dataset.f){this.dataset.f='1';this.src='hero-bg.jpg';}else{this.style.display='none';}"
+      />
+      <div class="hero-diya-glow hero-diya-left"></div>
+      <div class="hero-diya-glow hero-diya-right"></div>
+      <div class="sparkle-layer" id="sparkleLayer"></div>
+
+      <div class="hero-body">
+        <p class="hero-quote hero-animate d1">
+          “Two hearts, one beautiful destiny.<br>
+          We invite you to witness our love story’s next chapter as we,”
+        </p>
+        <div class="hero-animate d2">
+          <span class="name-main">Kusuma</span>
+          <span class="name-nick">(Kushi)</span>
+          <span class="weds-word">Weds</span>
+          <span class="name-main">Koushik</span>
+        </div>
+        <div class="countdown-row hero-animate d3">
+          <div class="cd-card"><div class="cd-num" id="cd-days">06</div><div class="cd-lbl">Days</div></div>
+          <div class="cd-card"><div class="cd-num" id="cd-hours">18</div><div class="cd-lbl">Hours</div></div>
+          <div class="cd-card"><div class="cd-num" id="cd-mins">22</div><div class="cd-lbl">Minutes</div></div>
+          <div class="cd-card"><div class="cd-num" id="cd-secs">40</div><div class="cd-lbl">Seconds</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. WITH GRATEFUL HEARTS (couple.jpg) -->
+    <section class="grateful-section">
+      <div class="petals-layer" id="petalsLayer"></div>
+      <div class="grateful-header">
+        <span class="grateful-kicker">A MOMENT MADE COMPLETE BY YOU</span>
+        <h2>With Grateful Hearts</h2>
+      </div>
+      <div class="msg-card-box" onclick="toggleMessageCard()">
+        <div class="frosted-card" id="frostedCard">
+          <div class="card-closed">
+            <div class="open-script">Open</div>
+            <div class="open-caption">A MESSAGE FOR YOU</div>
+          </div>
+          <div class="card-open">
+            <div class="msg-kicker">TO OUR DEAREST FAMILY &amp; FRIENDS</div>
+            <div class="msg-text">
+              <p>Our forever begins with love, and becomes more beautiful with your blessings. ❤️</p>
+              <p>A thousand dreams, countless smiles, and one beautiful promise to walk through life together. As we begin our journey as one, we would be truly delighted to have you beside us on our special day.</p>
+              <p>Join us as we celebrate love, cherish togetherness, and create memories that will remain in our hearts forever.</p>
+            </div>
+            <div class="msg-sign">WITH LOTS OF LOVE, KUSUMA ❤️</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. OUR FAMILIES -->
+    <section class="families-section">
+      <div class="kicker-sm">WITH THE BLESSINGS OF</div>
+      <h2 class="sec-title">Our Families</h2>
+      <p class="sec-sub">With joyful hearts, we invite you with family to celebrate our auspicious wedding</p>
+      <div class="fam-block">
+        <div class="fam-role">THE BRIDE</div>
+        <div class="fam-person">Chi. Sow. Kusuma (Kushi)</div>
+        <div class="fam-parents">Daughter of Smt. Vedavathi &amp; Sri Honnappa Gowda</div>
+        <div class="fam-place">Medu (Anyadi) House, Devachalla Village,<br>Sullia Taluk, Dakshina Kannada</div>
+      </div>
+      <div class="and-divider">And</div>
+      <div class="fam-block">
+        <div class="fam-role">THE GROOM</div>
+        <div class="fam-person">Chi. Ra. Koushik</div>
+        <div class="fam-parents">Eldest Son of Smt. Rathnavathi &amp; Sri Sundara Gowda</div>
+        <div class="fam-place">‘Swami Krupa’, Urunji House, Kutrupadi Village,<br>Kadaba Taluk, Dakshina Kannada</div>
+      </div>
+      <div class="compliments-note">
+        <strong>Best Compliments From:</strong><br>
+        Harish Gowda, Monappa Gowda &amp; Family (Medu / Anyadi House), Brothers, Relatives &amp; Friends
+      </div>
+    </section>
+
+    <!-- 5. THE WEDDING -->
+    <section class="wedding-section">
+      <h2 class="sec-title">The Wedding</h2>
+      <p class="sec-sub">Join us as the celebrations begin and two hearts become one</p>
+      <div class="kicker-sm">LOCATION</div>
+      <div class="loc-city">Kepu, Kadaba</div>
+
+      <div class="schedule-card">
+        <div class="day-row">
+          <div class="date-col"><div class="date-num">25</div><div class="date-mon">NOV</div><div class="date-day">WEDNESDAY</div></div>
+          <div class="events-col">
+            <div class="ev-item">
+              <h4>🌿 Madarangi Shastra</h4>
+              <span class="kn-tag">ಮದರಂಗಿ ಶಾಸ್ತ್ರ (Mehendi Ceremony)</span>
+              <div class="ev-time">11:30 AM onwards</div>
+            </div>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="date-col"><div class="date-num">26</div><div class="date-mon">NOV</div><div class="date-day">THURSDAY</div></div>
+          <div class="events-col">
+            <div class="ev-item">
+              <h4>🎺 Dibbana Departure</h4>
+              <span class="kn-tag">ದಿಬ್ಬಣ ಹೊರಡುವುದು</span>
+              <div class="ev-time">06:00 AM</div>
+            </div>
+            <div class="ev-item">
+              <h4>🔥 Dhara Muhurtham</h4>
+              <span class="kn-tag">ಧಾರಾ ಮುಹೂರ್ತ (Dhanu Lagna • Mrigashira)</span>
+              <div class="ev-time"><strong>09:31 AM</strong> 💛</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="venue-white-card">
+        <div class="kicker-sm">WEDDING VENUE</div>
+        <div class="venue-title-lg">Shree Mahaganapathi Lakshmi Janardana Temple</div>
+        <div class="venue-sub-loc">📍 Kepu, Kadaba Taluk, Dakshina Kannada</div>
+        <a href="https://maps.app.goo.gl/xhRUSubuZsahxTMf7?g_st=ac" target="_blank" rel="noopener noreferrer" class="dir-btn-maroon">➤ GET DIRECTIONS</a>
+      </div>
+    </section>
+
+    <!-- 6. THE RECEPTION (ATITHI SATKARA) -->
+    <section class="reception-section">
+      <h2 class="sec-title">The Reception</h2>
+      <p class="sec-sub">An evening of warmth, blessings, and dinner as we celebrate our new beginning</p>
+      <div class="kicker-sm" style="color:#e8c77b;">JOIN US AT</div>
+      <div style="font-size:26px;margin-bottom:10px;">Devachalla, Sullia</div>
+
+      <div class="rec-row">
+        <div class="rec-date-box"><div class="date-num" style="color:#4a0e17;">26</div><div class="date-mon">NOV</div><div class="date-day">THURSDAY</div></div>
+        <div class="rec-info-box">
+          <h4>✨ Atithi Satkara</h4>
+          <p>ಅತಿಥಿ ಸತ್ಕಾರ – ವಧುವಿನ ಮನೆಯಲ್ಲಿ</p>
+          <p style="color:#fff;">🕒 07:30 PM onwards</p>
+        </div>
+      </div>
+
+      <div class="kicker-sm" style="color:#e8c77b;margin-top:16px;">VENUE</div>
+      <div style="font-size:21px;color:#fff;">Medu (Anyadi) House (Bride’s Residence)</div>
+      <div style="font-family:'Montserrat',sans-serif;font-size:11px;color:#e8cfa4;margin-top:4px;">Devachalla Village, Sullia Taluk, Dakshina Kannada</div>
+      <a href="tel:+919980898620" class="dir-btn-gold">📞 CALL FOR DIRECTIONS (MEDU HOUSE)</a>
+    </section>
+
+      <!-- 7. PLACES TO EXPLORE -->
+    <section class="explore-section">
+      <div class="kicker-sm">WHILE YOU ARE HERE</div>
+      <h2 class="sec-title" style="line-height:1.08;">Places to<br>Explore</h2>
+      <p class="explore-sub">Discover serene shrines and lush Western Ghats getaways near Kadaba &amp; Sullia.</p>
+      <div class="place-slider-card">
+        <span class="slide-badge" id="slideCount">01 / 04</span>
+        <div class="kicker-sm" id="slideCat">DIVINE SHRINE</div>
+        <div class="slide-name" id="slideName">Kukke Subrahmanya Temple</div>
+        <div class="slide-dist" id="slideDist">~24 km from Venue</div>
+        <p class="slide-desc" id="slideDesc">Nestled beside the Kumaradhara River and lush Western Ghats, one of Karnataka’s most sacred pilgrimage destinations.</p>
+      </div>
+      <div class="slider-controls">
+        <button class="arrow-btn" onclick="changePlace(-1)" aria-label="Previous">←</button>
+        <span class="swipe-hint">TAP ARROWS TO EXPLORE</span>
+        <button class="arrow-btn" onclick="changePlace(1)" aria-label="Next">→</button>
+      </div>
+    </section>
+
+    <!-- 8. FOOTER -->
+    <footer class="footer-section">
+      <div style="margin-bottom:10px;">💛</div>
+      <div class="kicker-sm">WITH GRATEFUL HEARTS</div>
+      <div class="footer-thanks">Thank You</div>
+      <p class="footer-note">Your presence and blessings will make our celebration complete. We would be honoured to share this beautiful beginning with you.</p>
+      <div class="footer-names">With love, Kusuma &amp; Koushik</div>
+      <div class="welcome-pill">Our families look forward to welcoming you</div>
+      <div class="rsvp-line">Contact: <a href="tel:+919980898620">+91 99808 98620</a> • #KushiWedsKoushik</div>
+    </footer>
+
+  </div>
+
+  <script>
+    (function initSparkles() {
+      var l = document.getElementById('sparkleLayer');
+      if (!l) return;
+      for (var i = 0; i < 14; i++) {
+        var d = document.createElement('div');
+        d.className = 'sparkle';
+        d.style.left = (12 + Math.random() * 76) + '%';
+        d.style.animationDuration = (6 + Math.random() * 6) + 's';
+        d.style.animationDelay = (Math.random() * 6) + 's';
+        var sz = (3 + Math.random() * 4) + 'px';
+        d.style.width = sz; d.style.height = sz;
+        l.appendChild(d);
+      }
+    })();
+
+    var audioCtx = null, masterGain = null, isPlaying = false, usingMp3 = false;
+
+    function startDivineMusic() {
+      try {
+        var mp3 = document.getElementById('customMp3');
+        if (mp3 && mp3.readyState >= 2) {
+          mp3.volume = 0.35; mp3.play(); usingMp3 = true; isPlaying = true; return;
+        }
+      } catch (e) {}
+
+      try {
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        audioCtx = new AC();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+        masterGain.gain.linearRampToValueAtTime(0.38, audioCtx.currentTime + 2.5);
+        masterGain.connect(audioCtx.destination);
+
+        var delay = audioCtx.createDelay(); delay.delayTime.value = 0.38;
+        var fb = audioCtx.createGain(); fb.gain.value = 0.32;
+        delay.connect(fb); fb.connect(delay); delay.connect(masterGain);
+
+        [130.81, 196.00].forEach(function(f) {
+          var o = audioCtx.createOscillator(), g = audioCtx.createGain();
+          o.type = 'sine'; o.frequency.value = f; g.gain.value = 0.03;
+          o.connect(g); g.connect(masterGain); o.start();
+        });
+
+        var phrases = [
+          [523.25, 587.33, 659.25, 783.99, 659.25],
+          [783.99, 880.00, 1046.50, 880.00, 783.99],
+          [659.25, 587.33, 523.25, 587.33, 659.25]
+        ];
+        var pIdx = 0;
+
+        function playFlute() {
+          if (!isPlaying || !audioCtx || audioCtx.state !== 'running') return;
+          var ph = phrases[pIdx++ % phrases.length];
+          ph.forEach(function(f, i) {
+            var t = audioCtx.currentTime + i * 0.95;
+            var dur = (i === ph.length - 1) ? 1.7 : 0.92;
+            var o1 = audioCtx.createOscillator(), o2 = audioCtx.createOscillator();
+            var g = audioCtx.createGain(), g2 = audioCtx.createGain();
+            o1.type = 'sine'; o2.type = 'sine';
+            o1.frequency.setValueAtTime(f, t); o2.frequency.setValueAtTime(f * 2, t);
+            g2.gain.value = 0.12; o2.connect(g2);
+            g.gain.setValueAtTime(0.0001, t);
+            g.gain.linearRampToValueAtTime(0.065, t + 0.22);
+            g.gain.setValueAtTime(0.055, t + dur - 0.35);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+            o1.connect(g); g2.connect(g); g.connect(masterGain); g.connect(delay);
+            o1.start(t); o2.start(t); o1.stop(t + dur + 0.05); o2.stop(t + dur + 0.05);
+          });
+        }
+
+        var scale = [261.63, 329.63, 392.00, 440.00, 523.25, 659.25, 783.99];
+        var sStep = 0;
+        function playSantoor() {
+          if (!isPlaying || !audioCtx || audioCtx.state !== 'running') return;
+          var t = audioCtx.currentTime, o = audioCtx.createOscillator(), g = audioCtx.createGain();
+          o.type = 'sine'; o.frequency.setValueAtTime(scale[sStep % scale.length], t); sStep += 2;
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.linearRampToValueAtTime(0.045, t + 0.018);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + 2.2);
+          o.connect(g); g.connect(masterGain); g.connect(delay);
+          o.start(t); o.stop(t + 2.3);
+        }
+
+        isPlaying = true;
+        playFlute(); playSantoor();
+        setInterval(playFlute, 6200);
+        setInterval(playSantoor, 1150);
+      } catch (e) {}
     }
 
-    .events-col {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      justify-content: center;
-    }
-    .ev-item h4 {
-      font-size: 18.5px;
-      font-weight: 600;
-      color: #3a2214;
-      line-height: 1.2;
-    }
-    .ev-item .kn-tag {
-      font-size: 13px;
-      color: #8c5a14;
-      display: block;
-    }
-    .ev-item .ev-time {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 11.5px;
-      color: #5e4736;
-      margin-top: 3px;
+    function openInvitation() {
+      var ov = document.getElementById('doorOverlay');
+      var btn = document.getElementById('audioBtn');
+      var hero = document.getElementById('heroSection');
+      if (ov) { ov.classList.add('opening'); setTimeout(function() { ov.style.display = 'none'; }, 1250); }
+      if (hero) { setTimeout(function() { hero.classList.add('revealed'); }, 350); }
+      if (btn) btn.classList.add('visible');
+      startDivineMusic();
     }
 
-    .venue-white-card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 24px 18px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    function toggleAudio() {
+      var btn = document.getElementById('audioBtn');
+      if (usingMp3) {
+        var mp3 = document.getElementById('customMp3');
+        if (isPlaying) { mp3.pause(); isPlaying = false; btn.textContent = '▶'; }
+        else { mp3.play(); isPlaying = true; btn.textContent = '❚❚'; }
+        return;
+      }
+      if (!audioCtx) return;
+      if (isPlaying) { audioCtx.suspend(); isPlaying = false; btn.textContent = '▶'; }
+      else { audioCtx.resume(); isPlaying = true; btn.textContent = '❚❚'; }
     }
-    .venue-title-lg {
-      font-size: 24px;
-      font-weight: 600;
-      color: #3a2214;
-      line-height: 1.3;
-      margin: 6px 0 8px;
+
+    function toggleMessageCard() {
+      document.getElementById('frostedCard').classList.toggle('is-open');
+      var layer = document.getElementById('petalsLayer');
+      for (var i = 0; i < 20; i++) {
+        var p = document.createElement('div');
+        p.className = 'petal';
+        p.style.left = (Math.random() * 92) + '%';
+        p.style.animationDuration = (2.8 + Math.random() * 2.2) + 's';
+        p.style.animationDelay = (Math.random() * 0.9) + 's';
+        layer.appendChild(p);
+        (function(el) { setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 5500); })(p);
+      }
     }
-    
+
+    var places = [
+      { cat: "DIVINE SHRINE", name: "Kukke Subrahmanya Temple", dist: "~24 km from Venue", desc: "Nestled beside the Kumaradhara River and lush Western Ghats, one of Karnataka’s most sacred pilgrimage destinations." },
+      { cat: "PILGRIMAGE TOWN", name: "Sri Kshetra Dharmasthala", dist: "~38 km from Venue", desc: "Historic 800-year-old temple town on the banks of the Netravathi River, revered for Lord Manjunatha and the Bahubali statue." },
+      { cat: "NATURE & SPRING", name: "Bendru Theertha", dist: "~28 km (Near Puttur)", desc: "A rare natural lukewarm spring tucked beside the peaceful Seerehole stream amidst green coconut and areca plantations." },
+      { cat: "WESTERN GHATS VIEW", name: "Bisle Ghat Viewpoint", dist: "~45 km via Subrahmanya", desc: "Panoramic mountain viewpoint overlooking Pushpagiri, Kumara Parvatha, and Yenikallu Betta across the misty forest canopy." }
+    ];
+    var placeIdx = 0;
+
+    function changePlace(step) {
+      placeIdx = (placeIdx + step + places.length) % places.length;
+      var item = places[placeIdx];
+      document.getElementById('slideCount').textContent = '0' + (placeIdx + 1) + ' / 0' + places.length;
+      document.getElementById('slideCat').textContent = item.cat;
+      document.getElementById('slideName').textContent = item.name;
+      document.getElementById('slideDist').textContent = item.dist;
+      document.getElementById('slideDesc').textContent = item.desc;
+    }
+
+    var weddingTime = new Date('2026-11-26T09:31:00+05:30').getTime();
+    function tick() {
+      var diff = weddingTime - new Date().getTime();
+      if (diff <= 0) return;
+      var d = Math.floor(diff / 86400000);
+      var h = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-days').textContent = (d < 10 ? '0' : '') + d;
+      document.getElementById('cd-hours').textContent = (h < 10 ? '0' : '') + h;
+      document.getElementById('cd-mins').textContent = (m < 10 ? '0' : '') + m;
+      document.getElementById('cd-secs').textContent = (s < 10 ? '0' : '') + s;
+    }
+    setInterval(tick, 1000);
+    tick();
+  </script>
+</body>
+</html>
+<!-- END OF FILE -->
